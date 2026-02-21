@@ -1,18 +1,25 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://fleet-flow-m41x.onrender.com',
-    headers: { 'Content-Type': 'application/json' },
+    baseURL: 'https://fleet-flow-m41x.onrender.com/api', // ✅ added /api
+    headers: {
+        'Content-Type': 'application/json',
+    },
 });
 
-// Attach token to every request
-api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('fleetflow_token');
-    if (token) config.headers.Authorization = `Bearer ${token}`;
-    return config;
-});
+// 🔐 Attach token to every request
+api.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('fleetflow_token');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
-// Handle 401 globally
+// 🚨 Handle 401 globally
 api.interceptors.response.use(
     (response) => response,
     (error) => {
