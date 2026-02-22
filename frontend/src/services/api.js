@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://fleet-flow-m41x.onrender.com/api', // ✅ added /api
+    baseURL: 'https://fleet-flow-m41x.onrender.com', // ✅ added /api
     headers: {
         'Content-Type': 'application/json',
     },
